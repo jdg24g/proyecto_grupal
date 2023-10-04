@@ -21,7 +21,7 @@ class MySQLConnection:
             host="localhost",
             user="admin",
             password="admin",
-            db="buses",
+            db="grupal_project",
             charset="utf8mb4",
             cursorclass=pymysql.cursors.DictCursor,
             autocommit=True,
