@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from .models import User
+from .models import Products
 # Create your views here.
 
 # Index view
@@ -7,7 +7,11 @@ def index(request):
     #if 'user' in request.session:
     #    return redirect("/dashboard/")
     #else:
-        return render(request, "index/index.html")
+        products = Products.objects.all()
+        data = {
+            "products": products
+        }
+        return render(request, "index/index.html", data)
 
 # Dashboard view
 def dashboard(request):

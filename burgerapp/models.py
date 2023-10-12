@@ -14,10 +14,19 @@ class User(models.Model):
         return f"{self.first_name} {self.last_name} {self.email_address} {self.phone_number} {self.created_at} {self.updated_at}"
 
 
+class Type(models.Model):
+    type_name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"{self.type_name}"
+
+
 class Products(models.Model):
     product_name = models.CharField(max_length=255)
     price = models.PositiveIntegerField()
     description = models.TextField(max_length=255)
+    type = models.ForeignKey(Type, on_delete=models.CASCADE, null=True, blank=True)
+    media = models.ImageField(upload_to='media/', blank=True, null=True)
 
     def __str__(self):
         return f"{self.product_name} {self.price} {self.description}"
