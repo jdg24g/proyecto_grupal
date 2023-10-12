@@ -1,4 +1,5 @@
 from django.shortcuts import redirect
+from django.contrib import messages
 from django.db.models import Q
 from django.contrib.auth.hashers import make_password, check_password
 from .models import User
@@ -14,22 +15,33 @@ def auth(request):
         }
         # print(email, password)
         try:
-            user = User.objects.filter( Q(email_address__startswith=data['email']) )
+            user = User.objects.filter( Q(email_address=data['email']) )
         except:
-            print("User not found")
+            #print("User not found")
+            messages.error(request, "Error al iniciar sesion")
             return redirect("/")
         else:
-            request.session['user'] = data["email"]
-            if check_password(data['password'], user[0].password):
-                return redirect("/dashboard/")
+            try:
+                if check_password(data['password'], user[0].password):
+                    #print("User found")
+                    messages.success(request, "Sesion iniciada con exito!")
+                    request.session['user'] = data["email"]
+                    return redirect("/dashboard/")
+                else:
+                    # raise Exception("Password incorrect")
+                    raise Exception("Password incorrect")
+            except:
+                #print("User not found")
+                messages.error(request, "No se ha podido iniciar sesion, compruebe sus datos.")
+                return redirect("/")
 
 # Register function
 def register(request):
     if request.method == "POST":
         first_name = request.POST.get("first_name")
         last_name = request.POST.get("last_name")
-        email = request.POST.get("email")
-        password = request.POST.get("password")
+        email = request.POST.get("r_email")
+        password = request.POST.get("r_password")
         data = {
             "first_name": first_name,
             "last_name": last_name,
@@ -45,9 +57,12 @@ def register(request):
                 password=make_password(data['password'])
             )
         except:
-            print('Something went wrong with the registration')
+            #print('Something went wrong with the registration')
+            messages.error(request, "Ha ocurrido un error al registrarse")
             return redirect("/")
         else:
+            #print('Successfully registered')
+            messages.success(request, "Registro exitoso!")
             user.save()
             request.session['user'] = email
             return redirect("/dashboard/")
