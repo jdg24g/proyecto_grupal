@@ -1,3 +1,17 @@
-from django.shortcuts import render
-
+from django.shortcuts import redirect, render
+from .models import User
 # Create your views here.
+
+# Index view
+def index(request):
+    #if 'user' in request.session:
+    #    return redirect("/dashboard/")
+    #else:
+        return render(request, "auth/auth.html")
+
+# Dashboard view
+def dashboard(request):
+    #if 'user' in request.session:
+        return render(request, "app/index.html")
+    #else:
+    #    return redirect("/")
