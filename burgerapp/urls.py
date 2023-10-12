@@ -17,10 +17,13 @@ Including another URLconf
 from django.urls import path
 from . import views
 from . import handlers
+from django.conf.urls.static import static
+from django.conf import settings
+
 urlpatterns = [
     path('', views.index, name='index'),
     path('auth/', handlers.auth, name='auth'),
     path('register/', handlers.register, name='register'),
     path('logout/', handlers.logout, name='logout'),
     path('dashboard/', views.dashboard, name='dashboard'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
