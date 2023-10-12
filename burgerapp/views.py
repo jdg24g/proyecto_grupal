@@ -7,7 +7,7 @@ def index(request):
     #if 'user' in request.session:
     #    return redirect("/dashboard/")
     #else:
-        return render(request, "auth/auth.html")
+        return render(request, "index/index.html")
 
 # Dashboard view
 def dashboard(request):
