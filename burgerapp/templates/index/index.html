@@ -1,1 +1,17 @@
-<h1>ESTO ES EL INDEX</h1>
+{% extends "base.html" %}
+{% block title %}X-Burger{% endblock title %}
+{% block header %}
+{% include "index/includes/header.html" %}
+{% endblock header %}
+{% block herosection %}
+{% include "index/includes/hero-section.html" %}
+{% endblock herosection %}
+{% block main %}
+<main id="main">
+    {% include "index/includes/main/aboutsection.html" %}
+    {% include "index/includes/main/whyussection.html" %}
+    {% include "index/includes/main/menusection.html" %}
+    {% include "index/includes/main/bookatablesection.html" %}
+    {% include "index/includes/main/contact.html" %}
+</main>
+{% endblock main %}
